@@ -12,23 +12,8 @@ import LoadingSpinner from '../../components_libs/LoadingSpinner'
 import { loadInitialUsers } from '../../actions/getUserActions'
 import Autosuggest from 'react-autosuggest';
 // import globalApi from '../../globalApi'
+import countryCity from '../../utils/country-city-js'
 
-const languages = [
-  {
-    name: 'C',
-    year: 1972
-  },
-  {
-    name: 'C#',
-    year: 2000
-  },
-  {
-    name: 'C++',
-    year: 1983
-  },
-
-
-];
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
 function escapeRegexCharacters(str) {
@@ -44,7 +29,7 @@ function getSuggestions(value) {
 
   const regex = new RegExp('^' + escapedValue, 'i');
 
-  return languages.filter(language => regex.test(language.name));
+  return countryCity.filter(language => regex.test(language.name));
 }
 
 function getSuggestionValue(suggestion) {
