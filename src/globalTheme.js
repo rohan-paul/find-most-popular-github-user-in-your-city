@@ -123,25 +123,6 @@ globalTheme.overrides = {
       padding: globalTheme.spacing(1),
     },
   },
-  WAMuiChipInput: {
-    root: {
-      background: globalTheme.background.paper,
-      marginTop: globalTheme.spacing(2),
-      marginBottom: globalTheme.spacing(3),
-      borderRadius: globalTheme.shape.borderRadius,
-    },
-    chipContainer: {
-      paddingTop: globalTheme.spacing(1),
-      paddingLeft: globalTheme.spacing(1),
-      paddingRight: globalTheme.spacing(1),
-    },
-    helperText: {
-      // Only way to avoid space between line and white input are on error
-      marginBottom: '-28px',
-      paddingTop: globalTheme.spacing(1),
-      marginTop: '0px',
-    },
-  },
   MuiTableCell: {
     // Hacking a bit to get the rounded corners, doesn't look easy to get it without targeting cell
     stickyHeader: {

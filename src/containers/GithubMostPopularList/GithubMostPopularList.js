@@ -10,7 +10,52 @@ import { Typography } from '@material-ui/core'
 import CholoSnackbar from '../../components_libs/CholoSnackbar'
 import LoadingSpinner from '../../components_libs/LoadingSpinner'
 import { loadInitialUsers } from '../../actions/getUserActions'
+import Autosuggest from 'react-autosuggest';
 // import globalApi from '../../globalApi'
+
+const languages = [
+  {
+    name: 'C',
+    year: 1972
+  },
+  {
+    name: 'C#',
+    year: 2000
+  },
+  {
+    name: 'C++',
+    year: 1983
+  },
+
+
+];
+
+// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
+function escapeRegexCharacters(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getSuggestions(value) {
+  const escapedValue = escapeRegexCharacters(value.trim());
+
+  if (escapedValue === '') {
+    return [];
+  }
+
+  const regex = new RegExp('^' + escapedValue, 'i');
+
+  return languages.filter(language => regex.test(language.name));
+}
+
+function getSuggestionValue(suggestion) {
+  return suggestion.name;
+}
+
+function renderSuggestion(suggestion) {
+  return (
+    <span>{suggestion.name}</span>
+  );
+}
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -31,6 +76,8 @@ const GithubMostPopularList = () => {
   const classes = useStyles()
   const [snackbar, setSnackbar] = useState(false)
   const [initialLoadingErrSnackbar, setInitialLoadingErrSnackbar] = useState(false)
+  const [value, setValue] = useState('')
+  const [suggestions, setSuggestions] = useState([])
 
   const closeSnackbar = () => setSnackbar(false)
 
@@ -38,6 +85,25 @@ const GithubMostPopularList = () => {
     dispatch(loadInitialUsers())
     setInitialLoadingErrSnackbar(globalStore.snackbar)
   }, [globalStore.snackbar, dispatch])
+
+  const onChange = (event, { newValue, method }) => {
+    setValue(newValue)
+  };
+
+  const onSuggestionsFetchRequested = ({ value }) => {
+
+    setSuggestions(getSuggestions(value))
+  };
+
+  const  onSuggestionsClearRequested = () => {
+    setSuggestions([])
+  };
+
+  const inputProps = {
+    placeholder: "Type 'c'",
+    value,
+    onChange: onChange
+  };
 
 
   return (
@@ -50,8 +116,16 @@ const GithubMostPopularList = () => {
           </div>
         ) : (
           <div>
-            paul
+          {console.log('VALUE IS ', value)}
+          <Autosuggest
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={inputProps} />
           </div>
+
         )}
 
 

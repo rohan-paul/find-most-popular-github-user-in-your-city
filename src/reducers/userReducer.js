@@ -7,6 +7,7 @@ const initialState = {
   loading: true,
   error_while_fetching_initial_table: false,
   error_while_fetching_initial_data: false,
+  city_to_search: "",
   snackbar: false,
   githubUser: {
     name: '',
