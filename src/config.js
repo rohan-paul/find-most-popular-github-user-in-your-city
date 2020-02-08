@@ -8,7 +8,6 @@ const config =
         // url: 'http://localhost:3000/dev/',
         // DEV
         url: 'https://api.github.com/search/users?q=location%3ABANGALORE&followers%3A%3E%3D1000&ref=searchresults&s=followers&type=Users',
-
       }
     : {
         url: 'http://localhost:3000/dev/',
