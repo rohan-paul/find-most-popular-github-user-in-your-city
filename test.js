@@ -76,7 +76,7 @@ const GithubMostPopularList = () => {
 
   return (
     <div className={classes.container}>
-      {console.log('GITHUB USER ', JSON.stringify(globalStore.githubUser))}
+      {console.log('GITHUB USER ', JSON.stringify(globalStore.topTenUsersInCity))}
       <div className={classes.tableAndFabContainer}>
         {globalStore.loading ? (
           <div className={classes.spinner}>

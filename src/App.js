@@ -32,7 +32,7 @@ const App = () => {
           <div>
             <div className={classes.container}>
               <PageHeader
-                headerText={'Most Popular Github Repo'
+                headerText={'Most Popular Github Users in your City'
                 }
               />
             </div>

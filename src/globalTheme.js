@@ -38,6 +38,7 @@ const globalTheme = createMuiTheme({
       letterSpacing: '0.0075em',
       verticalAlign: 'middle',
       alignItems: 'center',
+      textAlign: 'center',
     },
     subtitle1: {
       fontSize: 14,
@@ -140,9 +141,11 @@ globalTheme.overrides = {
   MuiButton: {
     root: {
       fontSize: 14,
+      height: '52px',
       fontWeight: 600,
       fontFamily: 'Montserrat',
       letterSpacing: '0.0075em',
+      "marginTop": "15px"
     },
   },
 }

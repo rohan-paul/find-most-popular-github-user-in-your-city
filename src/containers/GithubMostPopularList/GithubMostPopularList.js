@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
 import CholoSnackbar from '../../components_libs/CholoSnackbar'
 import LoadingSpinner from '../../components_libs/LoadingSpinner'
-import { loadInitialUsers } from '../../actions/getUserActions'
+import { loadMostPopularUsers, handleCityToSearchChange } from '../../actions/getUserActions'
 import Button from '@material-ui/core/Button'
 import Autosuggest from 'react-autosuggest';
 // import globalApi from '../../globalApi'
@@ -53,36 +53,42 @@ const useStyles = makeStyles(theme => ({
     margin: 'auto',
     maxWidth: '1400px',
     minHeight: 'calc(100vh - 100px)',
-  },
-  innerTableContainer: {
-    height: 'calc(100vh - 190px)',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.background.paper,
+    alignItems: 'center ',
+    justifyContent: 'centert',
+    verticalAlign: 'middle t',
+    textAlign: 'center',
   },
   table: {
     backgroundColor: theme.background.paper,
     borderRadius: theme.shape.borderRadius,
     paddingBottom: '100px',
+    alignItems: 'center ',
+    justifyContent: 'center ',
+    verticalAlign: 'middle ',
+    textAlign: 'center',
   },
+
   inputandButtonContainer: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center ',
+    justifyContent: 'center ',
   },
   react_autosuggest__container: {
     "position": "relative",
-    "width": "440px",
     "height": "30px",
-
+    "marginRight": "10px",
   },
   react_autosuggest__input: {
     "width": "240px",
     "height": "30px",
     "padding": "10px 20px",
-    "fontFamily": "Helvetica, sans-serif",
+    fontFamily: 'Montserrat',
     "fontWeight": "300",
     "fontSize": "16px",
     "border": "1px solid #aaa",
-    "borderRadius": "4px"
+    "borderRadius": "4px",
+
   },
   react_autosuggest__input__focused: {
     "outline": "none"
@@ -97,11 +103,12 @@ const useStyles = makeStyles(theme => ({
   react_autosuggest__suggestions_container__open: {
     "display": "block",
     "position": "absolute",
+    "left": 0,
     "top": "51px",
     "width": "280px",
     "border": "1px solid #aaa",
     "backgroundColor": "#fff",
-    "fontFamily": "Helvetica, sans-serif",
+    fontFamily: 'Montserrat',
     "fontWeight": "300",
     "fontSize": "16px",
     "borderBottomLeftRadius": "4px",
@@ -111,7 +118,7 @@ const useStyles = makeStyles(theme => ({
   react_autosuggest__suggestions_list: {
     "margin": "0",
     "padding": "0",
-    "listStyleType": "none"
+    "listStyleType": "none",
   },
   react_autosuggest__suggestion: {
     "cursor": "pointer",
@@ -134,18 +141,22 @@ const GithubMostPopularList = () => {
 
   const closeSnackbar = () => setSnackbar(false)
 
-  useEffect(() => {
-    dispatch(loadInitialUsers())
-    setInitialLoadingErrSnackbar(globalStore.snackbar)
-  }, [globalStore.snackbar, dispatch])
+  // useEffect(() => {
+  //   dispatch(loadMostPopularUsers())
+  //   setInitialLoadingErrSnackbar(globalStore.snackbar)
+  // }, [globalStore.snackbar, dispatch])
+
+  const getCityData = city =>  dispatch(loadMostPopularUsers(city))
 
   const onChange = (event, { newValue, method }) => {
+    dispatch(handleCityToSearchChange(newValue))
     setValue(newValue)
+
   };
 
   const onSuggestionsFetchRequested = ({ value }) => {
-
     setSuggestions(getSuggestions(value))
+
   };
 
   const  onSuggestionsClearRequested = () => {
@@ -161,7 +172,7 @@ const GithubMostPopularList = () => {
 
   return (
     <div className={classes.container}>
-      {console.log('GITHUB USER ', JSON.stringify(globalStore.githubUser))}
+      {/* {console.log('Top 10 GITHUB USERs ', JSON.stringify(globalStore.topTenUsersInCity))} */}
       <div className={classes.tableAndFabContainer}>
         {globalStore.loading ? (
           <div className={classes.spinner}>
@@ -169,7 +180,8 @@ const GithubMostPopularList = () => {
           </div>
         ) : (
           <div className={classes.table}>
-          {console.log('VALUE IS ', value)}
+          {/* {console.log('VALUE IS ', globalStore.city_to_search)} */}
+          {console.log('TOP 10 IN COMP ', globalStore.topTenUsersInCity)}
           <div className={classes.inputandButtonContainer} >
             <Autosuggest
               suggestions={suggestions}
@@ -191,25 +203,29 @@ const GithubMostPopularList = () => {
                 suggestionHighlighted: classes.react_autosuggest__suggestion__highlighted,
                 }
               }
-
           />
           <Button
-          // onClick={onSave}
+          onClick={() => {
+            const city = globalStore.city_to_search
+            getCityData(city)
+            }
+            }
           variant="contained"
           size="large"
           color="primary"
-          // disabled={}
+          disabled={globalStore.city_to_search === ''}
         >
           <Typography
             variant="h3"
             className={classes.modalButtonLabelEnabled}
           >
-            Save
+            Load City Data
           </Typography>
         </Button>
         </div>
           </div>
-        )}
+        )
+        }
 
 
         <CholoSnackbar

@@ -1,32 +1,37 @@
 import {
-  LOAD_INITIAL_TABLE,
+  LOAD_MOST_POPULAR_USERS,
   ERROR_WHILE_FETCHING_INITIAL_TABLE,
+  CITY_TO_SEARCH
 } from '../actions/types'
 
 const initialState = {
-  loading: true,
+  loading: false,
   error_while_fetching_initial_table: false,
   error_while_fetching_initial_data: false,
   city_to_search: "",
   snackbar: false,
-  githubUser: {
-    name: '',
-  },
+  topTenUsersInCity: [] ,
 }
 
 export default (state = initialState, actions) => {
   switch (actions.type) {
-    case LOAD_INITIAL_TABLE:
+    case LOAD_MOST_POPULAR_USERS:
+      console.log('RESP IN REDUCER ', state.topTenUsersInCity)
       return {
         ...state,
         loading: false,
         snackbar: false,
-        githubUser: actions.payload,
+        topTenUsersInCity: actions.payload,
       }
     case ERROR_WHILE_FETCHING_INITIAL_TABLE:
       return {
         ...state,
         snackbar: actions.payload,
+      }
+    case CITY_TO_SEARCH:
+      return {
+        ...state,
+        city_to_search: actions.payload
       }
 
     default:
