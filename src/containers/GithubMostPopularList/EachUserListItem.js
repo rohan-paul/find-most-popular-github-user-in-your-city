@@ -34,13 +34,27 @@ const EachUserListItem = () => {
               </ListItemAvatar>
               <div>
                 <Typography variant="h1">
-                  <ListItemText id={labelId} primary={item.login} />
+                  <ListItemText>
+                    <a
+                      style={{ display: 'table-cell' }}
+                      href={`https://github.com/${item.login}`}
+                      target="_blank"
+                    >
+                      {item.login}
+                    </a>
+                  </ListItemText>
+                  {/* <ListItemText id={labelId} primary={item.login} /> */}
                 </Typography>
               </div>
             </ListItem>
-            <ListItem key={item} button>
+            <ListItem key={index} button>
               <div style={{ marginLeft: '50px' }}>
                 <ListItemText id={labelId} primary={item.name} />
+              </div>
+              <div style={{ marginLeft: '50px' }}>
+                <Typography variant="h1">
+                  <ListItemText id={labelId} primary={item.totalUserStars} />
+                </Typography>
               </div>
               <div style={{ marginLeft: '50px' }}>
                 <ListItemText id={labelId} primary={item.bio} />

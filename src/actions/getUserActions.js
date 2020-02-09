@@ -15,25 +15,6 @@ const headers = {
   'Content-Type': 'application/json',
 }
 
-// Util function to return a Promise
-// const getEachUserGivenId = (id, index) => {
-//   return new Promise((resolve, reject) => {
-//     axios.get(`https://api.github.com/users/${id}`).then(res => {
-//       let userProfileData = res.data
-//       let result = pick(userProfileData, ['login', 'bio', 'email', 'name', 'id'])
-//       if (
-//         result &&
-//         Object.entries(result).length !== 0 &&
-//         result.constructor === Object
-//       ) {
-//         resolve(result)
-//       } else {
-//         reject(new Error('No data received'))
-//       }
-//     })
-//   })
-// }
-
 const getEachUserGivenId = (id, index) => {
   return new Promise((resolve, reject) => {
     axios
@@ -105,7 +86,7 @@ export const loadMostPopularUsers = city => async dispatch => {
       url: `https://api.github.com/search/users?q=location%3A${city}&followers%3A%3E%3D1000&ref=searchresults&s=followers&type=Users`,
       headers,
     }).then(res => {
-      const resData = res.data.items.slice(0, 2)
+      const resData = res.data.items.slice(0, 10)
       var topTenUsersInCity = map(
         resData,
         partialRight(pick, ['login', 'id', 'avatar_url']),

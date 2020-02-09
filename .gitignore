@@ -81,4 +81,6 @@ Project-Note-PAUL
 
 #ignore file name ending in "-bkp.js" in its name. So I will have to put "-bkp.js" at all files that is just for my development-time back up .
 **/*-bkp.js
+**/*-Bkp.js
+**/*-BKP.js
 
