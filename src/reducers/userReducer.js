@@ -1,4 +1,5 @@
 import {
+  LOADING,
   LOAD_MOST_POPULAR_USERS,
   ERROR_WHILE_FETCHING_INITIAL_TABLE,
   CITY_TO_SEARCH,
@@ -11,19 +12,15 @@ const initialState = {
   city_to_search: '',
   snackbar: false,
   topTenUsersInCity: [],
-  topUserIndividualProfiles: [],
 }
 
 export default (state = initialState, actions) => {
   switch (actions.type) {
-    // case LOAD_MOST_POPULAR_USERS:
-    //   console.log('RESP IN REDUCER ', state.topTenUsersInCity)
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     snackbar: false,
-    //     topTenUsersInCity: actions.payload,
-    //   }
+    case LOADING:
+      return {
+        ...state,
+        loading: actions.payload,
+      }
     case LOAD_MOST_POPULAR_USERS:
       console.log('RESP IN REDUCER ', state.topTenUsersInCity)
       return {
@@ -31,7 +28,6 @@ export default (state = initialState, actions) => {
         loading: false,
         snackbar: false,
         topTenUsersInCity: actions.payload.topTenUsersInCity,
-        topUserIndividualProfiles: actions.payload.topUserIndividualProfiles,
       }
     case ERROR_WHILE_FETCHING_INITIAL_TABLE:
       return {

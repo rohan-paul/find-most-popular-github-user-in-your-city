@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import {
+  LOADING,
   LOAD_MOST_POPULAR_USERS,
   ERROR_WHILE_FETCHING_INITIAL_TABLE,
   CITY_TO_SEARCH,
@@ -19,7 +20,7 @@ const getEachUserGivenId = (id, index) => {
   return new Promise((resolve, reject) => {
     axios.get(`https://api.github.com/users/${id}`).then(res => {
       let userData = res.data
-      let result = pick(userData, ['login', 'bio', 'email', 'name'])
+      let result = pick(userData, ['login', 'bio', 'email', 'name', 'id'])
       if (
         result &&
         Object.entries(result).length !== 0 &&
@@ -33,23 +34,30 @@ const getEachUserGivenId = (id, index) => {
   })
 }
 
-// export const loadMostPopularUsers = city => async dispatch => {
-//   try {
-//     const res = await globalApi.loadUser(city)
-//     dispatch({
-//       type: LOAD_MOST_POPULAR_USERS,
-//       payload: res.data.items.slice(0, 10),
-//     })
-//   } catch (err) {
-//     dispatch({
-//       type: ERROR_WHILE_FETCHING_INITIAL_TABLE,
-//       payload: 'Error occurred while loading Initial Data',
-//     })
-//   }
-// }
+const mergeArraysCondionally = (topUsers, userProfiles) => {
+  let merged = []
+
+  // First return the first array with only elements whose id matches with an element's id from the second array
+  topUsers.every(i =>
+    userProfiles.map(j => j.id).includes(i.id) ? merged.push(i) : null,
+  )
+
+  // Now that I have got two separate arrays of matched and the original array, simply merge the matched array (on the basis of ID) with the original array containing the data.
+  merged = merged.map(i =>
+    Object.assign(
+      i,
+      userProfiles.find(j => j.id === i.id),
+    ),
+  )
+  return merged
+}
 
 export const loadMostPopularUsers = city => async dispatch => {
   try {
+    dispatch({
+      type: LOADING,
+      payload: true,
+    })
     axios({
       method: 'get',
       url: `https://api.github.com/search/users?q=location%3A${city}&followers%3A%3E%3D1000&ref=searchresults&s=followers&type=Users`,
@@ -68,18 +76,10 @@ export const loadMostPopularUsers = city => async dispatch => {
       let topUserIndividualProfiles = Promise.all(topTenUserProfiles)
       topUserIndividualProfiles
         .then(res => {
-          console.log('ALL INDIVIDUAL USERS ', JSON.stringify(res))
-          // setFetchedData(res.data)
-          // setIsLoading(false)
-          // dispatch({
-          //   type: LOAD_MOST_POPULAR_USERS,
-          //   payload: topTenUsersInCity,
-          // })
           dispatch({
             type: LOAD_MOST_POPULAR_USERS,
             payload: {
-              topTenUsersInCity,
-              topUserIndividualProfiles: res,
+              topTenUsersInCity: mergeArraysCondionally(topTenUsersInCity, res),
             },
           })
         })

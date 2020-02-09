@@ -20,25 +20,6 @@ import countryCity from '../../utils/country-city-js'
 import { defaultTheme } from 'react-autosuggest/dist/theme'
 import axios from 'axios'
 import { useStyles } from './GithubMostPopularListStyles'
-const omit = require('lodash.omit')
-
-const getEachUserGivenId = (id, index) => {
-  return new Promise((resolve, reject) => {
-    axios.get(`https://api.github.com/users/${id}`).then(res => {
-      let userData = res.data
-      let result = omit(userData, ['created_at', 'updated_at'])
-      if (
-        result &&
-        Object.entries(result).length !== 0 &&
-        result.constructor === Object
-      ) {
-        resolve(result)
-      } else {
-        reject(new Error('No data received'))
-      }
-    })
-  })
-}
 
 const escapeRegexCharacters = str => {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
@@ -81,25 +62,6 @@ const GithubMostPopularList = () => {
   //   setInitialLoadingErrSnackbar(globalStore.snackbar)
   // }, [globalStore.snackbar, dispatch])
 
-  // const getCityData = city => dispatch(loadMostPopularUsers(city))
-
-  const getAllUserProfilesFromIds = () => {
-    const userIds = globalStore.topTenUsersInCity.map(i => i.login)
-    setIsLoading(true)
-    console.log('ALL USERS ID ', userIds)
-    let topStories = userIds.map(getEachUserGivenId)
-    let results = Promise.all(topStories)
-    results
-      .then(res => {
-        console.log('ALL INDIVIDUAL USERS ', res.data)
-        setFetchedData(res.data)
-        setIsLoading(false)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-
   const loadAllData = () => {
     const city = globalStore.city_to_search
     dispatch(loadMostPopularUsers(city))
@@ -127,62 +89,61 @@ const GithubMostPopularList = () => {
   return (
     <div className={classes.container}>
       <div className={classes.tableAndFabContainer}>
-        {/* {isLoading ? (
+        {globalStore.loading ? (
           <div className={classes.spinner}>
             <LoadingSpinner />
           </div>
-        ) : ( */}
-        <div className={classes.table}>
-          {/* {console.log('VALUE IS ', globalStore.city_to_search)} */}
-          {console.log(
-            'TOP 10 IN COMP ',
-            JSON.stringify(globalStore.topTenUsersInCity),
-          )}
-          <div className={classes.inputandButtonContainer}>
-            <Autosuggest
-              suggestions={suggestions}
-              onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-              onSuggestionsClearRequested={onSuggestionsClearRequested}
-              getSuggestionValue={getSuggestionValue}
-              renderSuggestion={renderSuggestion}
-              inputProps={inputProps}
-              theme={{
-                ...defaultTheme,
-                container: classes.react_autosuggest__container,
-                input: classes.react_autosuggest__input,
-                inputOpen: classes.react_autosuggest__input__open,
-                inputFocused: classes.react_autosuggest__input__focused,
-                suggestionsContainer:
-                  classes.react_autosuggest__suggestions_container,
-                suggestionsContainerOpen:
-                  classes.react_autosuggest__suggestions_container__open,
-                suggestionsList: classes.react_autosuggest__suggestions_list,
-                suggestion: classes.react_autosuggest__suggestion,
-                suggestionHighlighted:
-                  classes.react_autosuggest__suggestion__highlighted,
-              }}
-            />
-            <Button
-              onClick={loadAllData}
-              variant="contained"
-              size="large"
-              color="primary"
-              disabled={globalStore.city_to_search === ''}
-            >
-              <Typography
-                variant="h3"
-                className={classes.modalButtonLabelEnabled}
+        ) : (
+          <div className={classes.table}>
+            {/* {console.log('VALUE IS ', globalStore.city_to_search)} */}
+            {console.log(
+              'TOP 10 IN COMP ',
+              JSON.stringify(globalStore.topTenUsersInCity),
+            )}
+            <div className={classes.inputandButtonContainer}>
+              <Autosuggest
+                suggestions={suggestions}
+                onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={onSuggestionsClearRequested}
+                getSuggestionValue={getSuggestionValue}
+                renderSuggestion={renderSuggestion}
+                inputProps={inputProps}
+                theme={{
+                  ...defaultTheme,
+                  container: classes.react_autosuggest__container,
+                  input: classes.react_autosuggest__input,
+                  inputOpen: classes.react_autosuggest__input__open,
+                  inputFocused: classes.react_autosuggest__input__focused,
+                  suggestionsContainer:
+                    classes.react_autosuggest__suggestions_container,
+                  suggestionsContainerOpen:
+                    classes.react_autosuggest__suggestions_container__open,
+                  suggestionsList: classes.react_autosuggest__suggestions_list,
+                  suggestion: classes.react_autosuggest__suggestion,
+                  suggestionHighlighted:
+                    classes.react_autosuggest__suggestion__highlighted,
+                }}
+              />
+              <Button
+                onClick={loadAllData}
+                variant="contained"
+                size="large"
+                color="primary"
+                disabled={globalStore.city_to_search === ''}
               >
-                Load City Data
-              </Typography>
-            </Button>
+                <Typography
+                  variant="h3"
+                  className={classes.modalButtonLabelEnabled}
+                >
+                  Load City Data
+                </Typography>
+              </Button>
+            </div>
+            <div style={{ marginTop: '20px' }}>
+              <EachUserListItem></EachUserListItem>
+            </div>
           </div>
-          <div style={{ marginTop: '20px' }}>
-            <EachUserListItem></EachUserListItem>
-          </div>
-        </div>
-        {/* ) */}
-        }
+        )}
         <CholoSnackbar
           open={
             snackbar === true ||

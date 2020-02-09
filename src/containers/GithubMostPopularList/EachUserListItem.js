@@ -40,7 +40,18 @@ const EachUserListItem = () => {
             </ListItem>
             <ListItem key={item} button>
               <div style={{ marginLeft: '50px' }}>
-                <ListItemText id={labelId} primary={`some text`} />
+                <ListItemText id={labelId} primary={item.name} />
+              </div>
+              <div style={{ marginLeft: '50px' }}>
+                <ListItemText id={labelId} primary={item.bio} />
+              </div>
+              <div style={{ marginLeft: '50px' }}>
+                <ListItemText
+                  id={labelId}
+                  primary={
+                    item.email === null ? 'Email not accessible' : item.email
+                  }
+                />
               </div>
             </ListItem>
           </>

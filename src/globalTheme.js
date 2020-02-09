@@ -89,16 +89,6 @@ const globalTheme = createMuiTheme({
 })
 
 globalTheme.overrides = {
-  MuiDialog: {
-    paper: {
-      backgroundColor: globalTheme.background.default,
-    },
-  },
-  MuiDialogTitle: {
-    root: {
-      textAlign: 'center',
-    },
-  },
   MuiTextField: {
     root: {
       background: globalTheme.background.paper,
@@ -112,40 +102,15 @@ globalTheme.overrides = {
       padding: globalTheme.spacing(1),
     },
   },
-  MuiFormHelperText: {
-    root: {
-      backgroundColor: globalTheme.background.default,
-      marginTop: '0px',
-      padding: globalTheme.spacing(1),
-    },
-  },
-  MuiFormLabel: {
-    root: {
-      padding: globalTheme.spacing(1),
-    },
-  },
-  MuiTableCell: {
-    // Hacking a bit to get the rounded corners, doesn't look easy to get it without targeting cell
-    stickyHeader: {
-      borderTopLeftRadius: globalTheme.shape.borderRadius,
-      borderTopRightRadius: globalTheme.shape.borderRadius,
-    },
-  },
-  MuiFormControl: {
-    root: {
-      minWidth: 450,
-      width: '100%',
-      backgroundColor: 'white',
-    },
-  },
+
   MuiButton: {
     root: {
       fontSize: 14,
-      height: '52px',
+      height: '53px',
       fontWeight: 600,
       fontFamily: 'Montserrat',
       letterSpacing: '0.0075em',
-      marginTop: '15px',
+      marginTop: '18px',
     },
   },
 }
