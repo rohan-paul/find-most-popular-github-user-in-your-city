@@ -1,21 +1,21 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/button-has-type */
-/* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Typography } from '@material-ui/core'
-import CholoSnackbar from '../../components_libs/CholoSnackbar'
+import GlobalSnackbar from '../../components_libs/GlobalSnackbar'
 import LoadingSpinner from '../../components_libs/LoadingSpinner'
 import {
   loadMostPopularUsers,
   handleCityToSearchChange,
+  handleSnackBarStatus,
 } from '../../actions/getUserActions'
 import Button from '@material-ui/core/Button'
 import Autosuggest from 'react-autosuggest'
 import EachUserListItem from './EachUserListItem'
-import countryCity from '../../utils/country-city-js'
+import cityList from '../../utils/country-city-js'
 import { defaultTheme } from 'react-autosuggest/dist/theme'
 import { useStyles } from './GithubMostPopularListStyles'
 
@@ -29,7 +29,7 @@ const getSuggestions = value => {
     return []
   }
   const regex = new RegExp('^' + escapedValue, 'i')
-  return countryCity.filter(language => regex.test(language.name))
+  return cityList.filter(language => regex.test(language.name))
 }
 
 const getSuggestionValue = suggestion => {
@@ -44,19 +44,10 @@ const GithubMostPopularList = () => {
   const globalStore = useSelector(state => state.globalStore)
   const dispatch = useDispatch()
   const classes = useStyles()
-  const [snackbar, setSnackbar] = useState(false)
-  const [initialLoadingErrSnackbar, setInitialLoadingErrSnackbar] = useState(
-    false,
-  )
   const [value, setValue] = useState('')
   const [suggestions, setSuggestions] = useState([])
 
-  const closeSnackbar = () => setSnackbar(false)
-
-  // useEffect(() => {
-  //   dispatch(loadMostPopularUsers())
-  //   setInitialLoadingErrSnackbar(globalStore.snackbar)
-  // }, [globalStore.snackbar, dispatch])
+  const closeSnackbar = () => dispatch(handleSnackBarStatus(false))
 
   const loadAllData = () => {
     const city = globalStore.city_to_search
@@ -91,11 +82,7 @@ const GithubMostPopularList = () => {
           </div>
         ) : (
           <div className={classes.table}>
-            {/* {console.log('VALUE IS ', globalStore.city_to_search)} */}
-            {/* {console.log(
-              'TOP 10 IN COMP ',
-              JSON.stringify(globalStore.topTenUsersInCity),
-            )} */}
+            {console.log('SNACKBAR ', globalStore.snackbar)}
             <div className={classes.inputandButtonContainer}>
               <Autosuggest
                 suggestions={suggestions}
@@ -140,23 +127,15 @@ const GithubMostPopularList = () => {
             </div>
           </div>
         )}
-        <CholoSnackbar
+        <GlobalSnackbar
           open={
-            snackbar === true ||
-            typeof snackbar === 'object' ||
-            initialLoadingErrSnackbar ===
-              'Error occurred while loading Initial data'
+            globalStore.snackbar === true ||
+            typeof globalStore.snackbar === 'object' ||
+            typeof globalStore.snackbar === 'string' ||
+              globalStore.snackbar instanceof String
           }
           variant="error"
-          message={
-            // eslint-disable-next-line no-nested-ternary
-            initialLoadingErrSnackbar ===
-            'Error occurred while loading Initial Data'
-              ? 'Error occurred while loading Initial Data'
-              : snackbar && snackbar._id
-              ? `${snackbar && snackbar.name} was successfully edited`
-              : `${snackbar && snackbar.name} was successfully added`
-          }
+          message={'Error occurred while loading Initial Data'}
           onClose={closeSnackbar}
         />
       </div>

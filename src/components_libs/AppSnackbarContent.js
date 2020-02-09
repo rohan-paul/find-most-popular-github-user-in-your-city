@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const CholoSnackbarContent = props => {
+const AppSnackbarContent = props => {
   const classes = useStyles()
   const { className, message, onClose, variant, ...other } = props
 
@@ -53,17 +53,17 @@ const CholoSnackbarContent = props => {
   )
 }
 
-CholoSnackbarContent.defaultProps = {
+AppSnackbarContent.defaultProps = {
   className: undefined,
   message: '',
   onClose: () => {},
 }
 
-CholoSnackbarContent.propTypes = {
+AppSnackbarContent.propTypes = {
   className: PropTypes.string,
   message: PropTypes.node,
   onClose: PropTypes.func,
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
 }
 
-export default CholoSnackbarContent
+export default AppSnackbarContent

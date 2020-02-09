@@ -4,6 +4,7 @@ import {
   LOAD_MOST_POPULAR_USERS,
   ERROR_WHILE_FETCHING_INITIAL_TABLE,
   CITY_TO_SEARCH,
+  SNACKBAR_STATUS,
 } from './types'
 
 import axios from 'axios'
@@ -15,6 +16,13 @@ const headers = {
   'Content-Type': 'application/json',
 }
 
+export const handleSnackBarStatus = bool => {
+  return {
+    type: SNACKBAR_STATUS,
+    payload: bool,
+  }
+}
+
 const getEachUserGivenId = (id, index) => {
   return new Promise((resolve, reject) => {
     axios
@@ -24,7 +32,6 @@ const getEachUserGivenId = (id, index) => {
       ])
       .then(
         axios.spread((userProfile, userRepo) => {
-          console.log('asgs')
           let userProfileData = userProfile.data
           const totalUserStars = userRepo.data
             .map(i => i.stargazers_count)
@@ -50,6 +57,9 @@ const getEachUserGivenId = (id, index) => {
           }
         }),
       )
+      .catch(err => {
+        console.log('HIT the ERROR')
+      })
   })
 }
 
@@ -82,33 +92,42 @@ export const loadMostPopularUsers = city => async dispatch => {
       method: 'get',
       url: `https://api.github.com/search/users?q=location%3A${city}&followers%3A%3E%3D1000&ref=searchresults&s=followers&type=Users`,
       headers,
-    }).then(res => {
-      const resData = res.data.items.slice(0, 1)
-      var topTenUsersInCity = map(
-        resData,
-        partialRight(pick, ['login', 'id', 'avatar_url']),
-      )
-
-      const userIds = topTenUsersInCity.map(i => i.login)
-      let topTenUserProfiles = userIds.map(getEachUserGivenId)
-      let topUserIndividualProfiles = Promise.all(topTenUserProfiles)
-      topUserIndividualProfiles
-        .then(res => {
-          // console.log('INDVIDUAL USER DATA ', res)
-          dispatch({
-            type: LOAD_MOST_POPULAR_USERS,
-            payload: {
-              topTenUsersInCity: mergeArraysConditionally(
-                topTenUsersInCity,
-                res,
-              ),
-            },
-          })
-        })
-        .catch(err => {
-          console.log(err)
-        })
     })
+      .then(async res => {
+        const resData = res.data.items.slice(0, 1)
+        var topTenUsersInCity = map(
+          resData,
+          partialRight(pick, ['login', 'id', 'avatar_url']),
+        )
+
+        const userIds = topTenUsersInCity.map(i => i.login)
+        let topTenUserProfiles = await userIds.map(getEachUserGivenId)
+        let topUserIndividualProfiles = Promise.all(topTenUserProfiles)
+        topUserIndividualProfiles
+          .then(res => {
+            dispatch({
+              type: LOAD_MOST_POPULAR_USERS,
+              payload: {
+                topTenUsersInCity: mergeArraysConditionally(
+                  topTenUsersInCity,
+                  res,
+                ),
+              },
+            })
+          })
+          .catch(err => {
+            dispatch({
+              type: ERROR_WHILE_FETCHING_INITIAL_TABLE,
+              payload: 'Error occurred while loading Initial Data',
+            })
+          })
+      })
+      .catch(err => {
+        dispatch({
+          type: ERROR_WHILE_FETCHING_INITIAL_TABLE,
+          payload: 'Error occurred while loading Initial Data',
+        })
+      })
   } catch (err) {
     dispatch({
       type: ERROR_WHILE_FETCHING_INITIAL_TABLE,

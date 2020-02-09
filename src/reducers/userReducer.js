@@ -3,6 +3,7 @@ import {
   LOAD_MOST_POPULAR_USERS,
   ERROR_WHILE_FETCHING_INITIAL_TABLE,
   CITY_TO_SEARCH,
+  SNACKBAR_STATUS,
 } from '../actions/types'
 
 const initialState = {
@@ -21,6 +22,12 @@ export default (state = initialState, actions) => {
         ...state,
         loading: actions.payload,
       }
+    case SNACKBAR_STATUS:
+      console.log('SNACKBAR COMING TO REDUCER ', actions.payload)
+      return {
+        ...state,
+        snackbar: actions.payload,
+      }
     case LOAD_MOST_POPULAR_USERS:
       // console.log('RESP IN REDUCER ', state.topTenUsersInCity)
       return {
@@ -32,7 +39,7 @@ export default (state = initialState, actions) => {
     case ERROR_WHILE_FETCHING_INITIAL_TABLE:
       return {
         ...state,
-        snackbar: actions.payload,
+        snackbar: true,
       }
     case CITY_TO_SEARCH:
       return {

@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Snackbar from '@material-ui/core/Snackbar'
 import PropTypes from 'prop-types'
-import CholoSnackbarContent from './CholoSnackbarContent'
+import AppSnackbarContent from './AppSnackbarContent'
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const CholoSnackbar = ({ open, onClose, message, variant }) => {
+const GlobalSnackbar = ({ open, onClose, message, variant }) => {
   const classes = useStyles()
 
   return (
@@ -23,7 +23,7 @@ const CholoSnackbar = ({ open, onClose, message, variant }) => {
       autoHideDuration={8000}
       onClose={onClose}
     >
-      <CholoSnackbarContent
+      <AppSnackbarContent
         onClose={onClose}
         variant={variant}
         className={classes.margin}
@@ -33,18 +33,18 @@ const CholoSnackbar = ({ open, onClose, message, variant }) => {
   )
 }
 
-CholoSnackbar.defaultProps = {
+GlobalSnackbar.defaultProps = {
   open: false,
   onClose: () => {},
   message: 'Unknown error',
   variant: 'warning',
 }
 
-CholoSnackbar.propTypes = {
+GlobalSnackbar.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
   message: PropTypes.string,
   variant: PropTypes.string,
 }
 
-export default CholoSnackbar
+export default GlobalSnackbar
