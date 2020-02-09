@@ -10,7 +10,6 @@
 # production
 build
 
-# I AM ALWAYS VERY STRICT ABOUT NOT PUSHING .env file RELATED TO REMOTE REPO, BUT FOR THIS EXERCISE, BECAUSE I MAY NOT DEPLOY THE LIVE APP TO AWS/GCP, I HAVE TO INCLUDE THESE .env files SO OTHERS CAN RUN IT IN LOCAL MACHINES
 .DS_Store
 .env.local
 .env.development.local
@@ -60,6 +59,8 @@ mockData.js
 src/firebase.js
 .prettierignore
 mockData.js
+test.js
+yarn.lock
 
 # Komodo
 *.komodoproject
@@ -83,4 +84,5 @@ Project-Note-PAUL
 **/*-bkp.js
 **/*-Bkp.js
 **/*-BKP.js
+
 

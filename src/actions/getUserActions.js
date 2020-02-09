@@ -94,7 +94,7 @@ export const loadMostPopularUsers = city => async dispatch => {
       headers,
     })
       .then(async res => {
-        const resData = res.data.items.slice(0, 1)
+        const resData = res.data.items.slice(0, 10)
         var topTenUsersInCity = map(
           resData,
           partialRight(pick, ['login', 'id', 'avatar_url']),
