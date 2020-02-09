@@ -15,10 +15,8 @@ import {
 import Button from '@material-ui/core/Button'
 import Autosuggest from 'react-autosuggest'
 import EachUserListItem from './EachUserListItem'
-// import globalApi from '../../globalApi'
 import countryCity from '../../utils/country-city-js'
 import { defaultTheme } from 'react-autosuggest/dist/theme'
-import axios from 'axios'
 import { useStyles } from './GithubMostPopularListStyles'
 
 const escapeRegexCharacters = str => {
@@ -46,8 +44,6 @@ const GithubMostPopularList = () => {
   const globalStore = useSelector(state => state.globalStore)
   const dispatch = useDispatch()
   const classes = useStyles()
-  const [isLoading, setIsLoading] = useState(false)
-  const [fetchedData, setFetchedData] = useState([])
   const [snackbar, setSnackbar] = useState(false)
   const [initialLoadingErrSnackbar, setInitialLoadingErrSnackbar] = useState(
     false,

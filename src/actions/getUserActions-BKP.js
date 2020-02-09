@@ -39,7 +39,7 @@ const getEachUserGivenId = (id, index) => {
     axios
       .all([
         axios.get(`https://api.github.com/users/${id}`),
-        axios.get(`https://api.github.com/users/${id}/repos?per_page=200`),
+        axios.get('https://api.github.com/users/rohan-paul/repos?per_page=200'),
       ])
       .then(
         axios.spread((userProfile, userRepo) => {
