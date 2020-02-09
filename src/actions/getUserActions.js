@@ -86,7 +86,7 @@ export const loadMostPopularUsers = city => async dispatch => {
       url: `https://api.github.com/search/users?q=location%3A${city}&followers%3A%3E%3D1000&ref=searchresults&s=followers&type=Users`,
       headers,
     }).then(res => {
-      const resData = res.data.items.slice(0, 10)
+      const resData = res.data.items.slice(0, 1)
       var topTenUsersInCity = map(
         resData,
         partialRight(pick, ['login', 'id', 'avatar_url']),

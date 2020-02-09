@@ -1,6 +1,5 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
@@ -12,8 +11,22 @@ import Avatar from '@material-ui/core/Avatar'
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    maxWidth: 360,
+
     backgroundColor: theme.palette.background.paper,
+  },
+  eachUserContainer: {
+    width: '100%',
+    marginBottom: theme.spacing(3),
+    backgroundColor: theme.background.paper,
+    borderBottomWidth: '1px !important',
+    borderBottom: '1px solid grey',
+  },
+  imageClass: {
+    width: '25px',
+    height: '25px',
+  },
+  listItem: {
+    marginLeft: '50px',
   },
 }))
 
@@ -27,7 +40,7 @@ const EachUserListItem = () => {
       {globalStore.topTenUsersInCity.map((item, index) => {
         const labelId = `checkbox-list-secondary-label-${item}`
         return (
-          <>
+          <div className={classes.eachUserContainer}>
             <ListItem key={item.id} button>
               <ListItemAvatar>
                 <Avatar alt={`Avatar n°${item + 1}`} src={item.avatar_url} />
@@ -43,23 +56,29 @@ const EachUserListItem = () => {
                       {item.login}
                     </a>
                   </ListItemText>
-                  {/* <ListItemText id={labelId} primary={item.login} /> */}
                 </Typography>
               </div>
             </ListItem>
             <ListItem key={index} button>
-              <div style={{ marginLeft: '50px' }}>
-                <ListItemText id={labelId} primary={item.name} />
+              <div className={classes.listItem}>
+                <Typography variant="h4">
+                  Name
+                  <ListItemText id={labelId} primary={item.name} />
+                </Typography>
               </div>
-              <div style={{ marginLeft: '50px' }}>
-                <Typography variant="h1">
+              <div className={classes.listItem}>
+                <Typography variant="h3">
+                  Total Stars Received
                   <ListItemText id={labelId} primary={item.totalUserStars} />
                 </Typography>
               </div>
-              <div style={{ marginLeft: '50px' }}>
-                <ListItemText id={labelId} primary={item.bio} />
+              <div className={classes.listItem}>
+                <Typography variant="h4">
+                  Bio
+                  <ListItemText id={labelId} primary={item.bio} />
+                </Typography>
               </div>
-              <div style={{ marginLeft: '50px' }}>
+              <div className={classes.listItem}>
                 <ListItemText
                   id={labelId}
                   primary={
@@ -68,7 +87,23 @@ const EachUserListItem = () => {
                 />
               </div>
             </ListItem>
-          </>
+            <ListItem>
+              <div
+                style={{
+                  marginLeft: '50px',
+                  display: 'flex',
+                  flexDirection: 'row',
+                }}
+              >
+                <img
+                  className={classes.imageClass}
+                  src={require('../../assets/images/location.png')}
+                  alt=""
+                />
+                <Typography>{globalStore.city_to_search}</Typography>
+              </div>
+            </ListItem>
+          </div>
         )
       })}
     </List>
