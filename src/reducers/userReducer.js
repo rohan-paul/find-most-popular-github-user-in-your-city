@@ -1,16 +1,17 @@
 import {
   LOAD_MOST_POPULAR_USERS,
   ERROR_WHILE_FETCHING_INITIAL_TABLE,
-  CITY_TO_SEARCH
+  CITY_TO_SEARCH,
 } from '../actions/types'
 
 const initialState = {
   loading: false,
   error_while_fetching_initial_table: false,
   error_while_fetching_initial_data: false,
-  city_to_search: "",
+  city_to_search: '',
   snackbar: false,
-  topTenUsersInCity: [] ,
+  topTenUsersInCity: [],
+  topUserIndividualProfiles: [],
 }
 
 export default (state = initialState, actions) => {
@@ -31,7 +32,7 @@ export default (state = initialState, actions) => {
     case CITY_TO_SEARCH:
       return {
         ...state,
-        city_to_search: actions.payload
+        city_to_search: actions.payload,
       }
 
     default:

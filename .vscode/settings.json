@@ -1,7 +1,7 @@
 {
   "workbench.colorTheme": "Sunburst",
   "editor.tabSize": 2,
-  "editorFormatOnSave":true,
+  "editor.formatOnSave": true,
   "[javascript]": {
     "editor.formatOnSave": false
   },
@@ -22,5 +22,5 @@
     ".flowconfig": true,
     ".watchmanconfig": true,
     "build": true
-  },
+  }
 }

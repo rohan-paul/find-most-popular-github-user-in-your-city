@@ -15,12 +15,12 @@ const globalTheme = createMuiTheme({
   },
   palette: {
     primary: {
-      light: 'rgb(254, 124, 0)',
-      main: 'rgb(254, 124, 0)',
+      light: '#2882F8',
+      main: '#2882F8',
       dark: '#212121',
     },
     secondary: {
-      main: 'rgb(254, 124, 0)',
+      main: '#2882F8',
     },
     error: {
       main: '#ff0000',
@@ -34,7 +34,7 @@ const globalTheme = createMuiTheme({
       fontSize: 33,
       fontFamily: 'Montserrat',
       fontWeight: 300,
-      color: 'rgb(254, 124, 0)',
+      color: '#2882F8',
       letterSpacing: '0.0075em',
       verticalAlign: 'middle',
       alignItems: 'center',
@@ -145,7 +145,7 @@ globalTheme.overrides = {
       fontWeight: 600,
       fontFamily: 'Montserrat',
       letterSpacing: '0.0075em',
-      "marginTop": "15px"
+      marginTop: '15px',
     },
   },
 }
