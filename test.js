@@ -76,7 +76,7 @@ const GithubMostPopularList = () => {
 
   return (
     <div className={classes.container}>
-      {console.log('GITHUB USER ', JSON.stringify(globalStore.topTenUsersInCity))}
+      {/* {console.log('GITHUB USER ', JSON.stringify(globalStore.topTenUsersInCity))} */}
       <div className={classes.tableAndFabContainer}>
         {globalStore.loading ? (
           <div className={classes.spinner}>
@@ -84,7 +84,7 @@ const GithubMostPopularList = () => {
           </div>
         ) : (
           <div className={classes.table}>
-          {console.log('VALUE IS ', value)}
+          {/* {console.log('VALUE IS ', value)} */}
           <div className={classes.inputandButtonContainer} >
             <Autosuggest
               suggestions={suggestions}

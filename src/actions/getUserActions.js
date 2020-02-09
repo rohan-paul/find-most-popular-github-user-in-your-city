@@ -36,18 +36,15 @@ const getEachUserGivenId = (id, index) => {
             'name',
             'id',
           ])
-          console.log(
-            'RESULT IS ',
-            JSON.stringify(
-              Object.assign(result, { totalUserStars: totalUserStars }),
-            ),
-          )
+          let modifiedResult = Object.assign(result, {
+            totalUserStars: totalUserStars,
+          })
           if (
             result &&
-            Object.entries(result).length !== 0 &&
+            Object.entries(modifiedResult).length !== 0 &&
             result.constructor === Object
           ) {
-            resolve(result)
+            resolve(modifiedResult)
           } else {
             reject(new Error('No data received'))
           }
@@ -97,7 +94,7 @@ export const loadMostPopularUsers = city => async dispatch => {
       let topUserIndividualProfiles = Promise.all(topTenUserProfiles)
       topUserIndividualProfiles
         .then(res => {
-          console.log('INDVIDUAL USER DATA ', res)
+          // console.log('INDVIDUAL USER DATA ', res)
           dispatch({
             type: LOAD_MOST_POPULAR_USERS,
             payload: {

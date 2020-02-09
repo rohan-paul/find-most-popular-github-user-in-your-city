@@ -22,7 +22,7 @@ export default (state = initialState, actions) => {
         loading: actions.payload,
       }
     case LOAD_MOST_POPULAR_USERS:
-      console.log('RESP IN REDUCER ', state.topTenUsersInCity)
+      // console.log('RESP IN REDUCER ', state.topTenUsersInCity)
       return {
         ...state,
         loading: false,

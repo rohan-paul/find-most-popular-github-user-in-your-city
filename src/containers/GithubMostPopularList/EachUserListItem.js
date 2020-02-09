@@ -26,13 +26,16 @@ const useStyles = makeStyles(theme => ({
     height: '25px',
   },
   listItem: {
-    marginLeft: '50px',
+    marginLeft: '80px',
+  },
+  avatar: {
+    width: '60px',
+    height: '70px',
   },
 }))
 
 const EachUserListItem = () => {
   const globalStore = useSelector(state => state.globalStore)
-  // const dispatch = useDispatch()
   const classes = useStyles()
 
   return (
@@ -43,9 +46,13 @@ const EachUserListItem = () => {
           <div className={classes.eachUserContainer}>
             <ListItem key={item.id} button>
               <ListItemAvatar>
-                <Avatar alt={`Avatar n°${item + 1}`} src={item.avatar_url} />
+                <Avatar
+                  className={classes.avatar}
+                  alt={`Avatar n°${item + 1}`}
+                  src={item.avatar_url}
+                />
               </ListItemAvatar>
-              <div>
+              <div style={{ marginLeft: '15px' }}>
                 <Typography variant="h1">
                   <ListItemText>
                     <a
@@ -58,6 +65,16 @@ const EachUserListItem = () => {
                   </ListItemText>
                 </Typography>
               </div>
+              <div
+                style={{
+                  marginLeft: '102px',
+                }}
+              >
+                <Typography variant="h3">
+                  Total Stars Received
+                  <ListItemText id={labelId} primary={item.totalUserStars} />
+                </Typography>
+              </div>
             </ListItem>
             <ListItem key={index} button>
               <div className={classes.listItem}>
@@ -66,31 +83,22 @@ const EachUserListItem = () => {
                   <ListItemText id={labelId} primary={item.name} />
                 </Typography>
               </div>
-              <div className={classes.listItem}>
-                <Typography variant="h3">
-                  Total Stars Received
-                  <ListItemText id={labelId} primary={item.totalUserStars} />
-                </Typography>
-              </div>
-              <div className={classes.listItem}>
+
+              <div
+                style={{
+                  marginLeft: '70px',
+                }}
+              >
                 <Typography variant="h4">
                   Bio
                   <ListItemText id={labelId} primary={item.bio} />
                 </Typography>
               </div>
-              <div className={classes.listItem}>
-                <ListItemText
-                  id={labelId}
-                  primary={
-                    item.email === null ? 'Email not accessible' : item.email
-                  }
-                />
-              </div>
             </ListItem>
             <ListItem>
               <div
                 style={{
-                  marginLeft: '50px',
+                  marginLeft: '70px',
                   display: 'flex',
                   flexDirection: 'row',
                 }}
@@ -101,6 +109,26 @@ const EachUserListItem = () => {
                   alt=""
                 />
                 <Typography>{globalStore.city_to_search}</Typography>
+              </div>
+              <div style={{ marginLeft: '55px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                  }}
+                >
+                  <img
+                    className={classes.imageClass}
+                    src={require('../../assets/images/email.png')}
+                    alt=""
+                  />
+                  <ListItemText
+                    id={labelId}
+                    primary={
+                      item.email === null ? 'Email not accessible' : item.email
+                    }
+                  />
+                </div>
               </div>
             </ListItem>
           </div>

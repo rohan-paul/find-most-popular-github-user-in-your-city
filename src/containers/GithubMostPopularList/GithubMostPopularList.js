@@ -92,10 +92,10 @@ const GithubMostPopularList = () => {
         ) : (
           <div className={classes.table}>
             {/* {console.log('VALUE IS ', globalStore.city_to_search)} */}
-            {console.log(
+            {/* {console.log(
               'TOP 10 IN COMP ',
               JSON.stringify(globalStore.topTenUsersInCity),
-            )}
+            )} */}
             <div className={classes.inputandButtonContainer}>
               <Autosuggest
                 suggestions={suggestions}
