@@ -16,13 +16,22 @@ const initialState = {
 
 export default (state = initialState, actions) => {
   switch (actions.type) {
+    // case LOAD_MOST_POPULAR_USERS:
+    //   console.log('RESP IN REDUCER ', state.topTenUsersInCity)
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     snackbar: false,
+    //     topTenUsersInCity: actions.payload,
+    //   }
     case LOAD_MOST_POPULAR_USERS:
       console.log('RESP IN REDUCER ', state.topTenUsersInCity)
       return {
         ...state,
         loading: false,
         snackbar: false,
-        topTenUsersInCity: actions.payload,
+        topTenUsersInCity: actions.payload.topTenUsersInCity,
+        topUserIndividualProfiles: actions.payload.topUserIndividualProfiles,
       }
     case ERROR_WHILE_FETCHING_INITIAL_TABLE:
       return {
