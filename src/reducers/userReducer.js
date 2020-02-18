@@ -13,6 +13,7 @@ const initialState = {
   city_to_search: '',
   snackbar: false,
   topTenUsersInCity: [],
+  totalNoOfUsersFromAPI: 0,
 }
 
 export default (state = initialState, actions) => {
@@ -35,6 +36,7 @@ export default (state = initialState, actions) => {
         loading: false,
         snackbar: false,
         topTenUsersInCity: actions.payload.topTenUsersInCity,
+        totalNoOfUsersFromAPI: actions.payload.totalNoOfUsersFromAPI,
       }
     case ERROR_WHILE_FETCHING_INITIAL_TABLE:
       return {

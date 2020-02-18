@@ -82,7 +82,11 @@ const mergeArraysConditionally = (topUsers, userProfiles) => {
   return merged
 }
 
-export const loadMostPopularUsers = city => async dispatch => {
+export const loadMostPopularUsers = (
+  city,
+  page,
+  numbersToFetch,
+) => async dispatch => {
   try {
     dispatch({
       type: LOADING,
@@ -90,11 +94,15 @@ export const loadMostPopularUsers = city => async dispatch => {
     })
     axios({
       method: 'get',
-      url: `https://api.github.com/search/users?q=location%3A${city}&followers%3A%3E%3D1000&ref=searchresults&s=followers&type=Users`,
+      // url: `https://api.github.com/search/users?q=location%3A${city}&followers%3A%3E%3D1000&ref=searchresults&s=followers&type=Users`,
+      url: `https://api.github.com/search/users?q=location:${city}`,
       headers,
     })
       .then(async res => {
-        const resData = res.data.items.slice(0, 10)
+        const totalNoOfUsersFromAPI = res.data.items.length
+        const start = page * numbersToFetch
+        const end = start + numbersToFetch
+        const resData = res.data.items.slice(start, end)
         var topTenUsersInCity = map(
           resData,
           partialRight(pick, ['login', 'id', 'avatar_url']),
@@ -112,6 +120,7 @@ export const loadMostPopularUsers = city => async dispatch => {
                   topTenUsersInCity,
                   res,
                 ),
+                totalNoOfUsersFromAPI,
               },
             })
           })

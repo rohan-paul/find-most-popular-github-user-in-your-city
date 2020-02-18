@@ -14,12 +14,19 @@ const useStyles = makeStyles(theme => ({
 
     backgroundColor: theme.palette.background.paper,
   },
-  eachUserContainer: {
+  eachUserContainerEven: {
     width: '100%',
-    marginBottom: theme.spacing(3),
+    paddingBottom: theme.spacing(2),
     backgroundColor: theme.background.paper,
-    borderBottomWidth: '1px !important',
-    borderBottom: '1px solid grey',
+    borderBottomWidth: '0.5px !important',
+    borderBottom: '0.5px solid grey',
+  },
+  eachUserContainerOdd: {
+    width: '100%',
+    paddingBottom: theme.spacing(2),
+    backgroundColor: theme.palette.secondary.light,
+    borderBottomWidth: '0.5px !important',
+    borderBottom: '0.5px solid grey',
   },
   imageClass: {
     width: '25px',
@@ -34,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const EachUserListItem = () => {
+const EachUserListItem = ({ currentCityShown }) => {
   const globalStore = useSelector(state => state.globalStore)
   const classes = useStyles()
 
@@ -43,7 +50,13 @@ const EachUserListItem = () => {
       {globalStore.topTenUsersInCity.map((item, index) => {
         const labelId = `checkbox-list-secondary-label-${item}`
         return (
-          <div className={classes.eachUserContainer}>
+          <div
+            className={
+              index % 2
+                ? classes.eachUserContainerOdd
+                : classes.eachUserContainerEven
+            }
+          >
             <ListItem key={item.id} button>
               <ListItemAvatar>
                 <Avatar
@@ -73,6 +86,9 @@ const EachUserListItem = () => {
                 <Typography variant="h3">
                   Total Stars Received
                   <ListItemText id={labelId} primary={item.totalUserStars} />
+                  {/* <Typography variant="overline">
+                    {item.totalUserStars}
+                  </Typography> */}
                 </Typography>
               </div>
             </ListItem>
@@ -108,7 +124,7 @@ const EachUserListItem = () => {
                   src={require('../../assets/images/location.png')}
                   alt=""
                 />
-                <Typography>{globalStore.city_to_search}</Typography>
+                <Typography>{currentCityShown}</Typography>
               </div>
               <div style={{ marginLeft: '55px' }}>
                 <div

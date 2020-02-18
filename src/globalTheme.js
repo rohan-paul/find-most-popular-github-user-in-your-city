@@ -21,6 +21,7 @@ const globalTheme = createMuiTheme({
     },
     secondary: {
       main: '#2882F8',
+      light: '#fdffe0',
     },
     error: {
       main: '#ff0000',
@@ -85,6 +86,15 @@ const globalTheme = createMuiTheme({
       verticalAlign: 'middle',
       alignItems: 'center',
     },
+    overline: {
+      fontSize: 20,
+      fontWeight: 800,
+      fontFamily: 'Montserrat',
+      color: '#2882F8',
+      letterSpacing: '0.0075em',
+      verticalAlign: 'middle',
+      alignItems: 'center',
+    },
   },
 })
 
@@ -102,7 +112,6 @@ globalTheme.overrides = {
       padding: globalTheme.spacing(1),
     },
   },
-
   MuiButton: {
     root: {
       fontSize: 14,
@@ -111,6 +120,17 @@ globalTheme.overrides = {
       fontFamily: 'Montserrat',
       letterSpacing: '0.0075em',
       marginTop: '18px',
+    },
+  },
+  MuiListItemText: {
+    root: {
+      fontSize: 20,
+      fontWeight: 800,
+      fontFamily: 'Montserrat',
+      color: '#2882F8',
+      letterSpacing: '0.0075em',
+      verticalAlign: 'middle',
+      alignItems: 'center',
     },
   },
 }
