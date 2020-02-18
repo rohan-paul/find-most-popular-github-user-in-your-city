@@ -4,6 +4,8 @@ This project is for searching the most popular (by followers count) Github user 
 
 Its built with React, Redux and Material-UI.
 
+<img src="./search-most-popular-github-users.gif">
+
 #### To launch the project locally
 
 `yarn install` and then
