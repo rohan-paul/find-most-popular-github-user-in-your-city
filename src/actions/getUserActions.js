@@ -5,15 +5,15 @@ import {
   ERROR_WHILE_FETCHING_INITIAL_TABLE,
   CITY_TO_SEARCH,
   SNACKBAR_STATUS,
-} from './types'
+} from "./types"
 
-import axios from 'axios'
-const pick = require('lodash.pick')
-const map = require('lodash.map')
-const partialRight = require('lodash.partialright')
+import axios from "axios"
+const pick = require("lodash.pick")
+const map = require("lodash.map")
+const partialRight = require("lodash.partialright")
 
 const headers = {
-  'Content-Type': 'application/json',
+  "Content-Type": "application/json",
 }
 
 export const handleSnackBarStatus = bool => {
@@ -37,11 +37,11 @@ const getEachUserGivenId = (id, index) => {
             .map(i => i.stargazers_count)
             .reduce((total, item) => total + item)
           let result = pick(userProfileData, [
-            'login',
-            'bio',
-            'email',
-            'name',
-            'id',
+            "login",
+            "bio",
+            "email",
+            "name",
+            "id",
           ])
           let modifiedResult = Object.assign(result, {
             totalUserStars: totalUserStars,
@@ -53,17 +53,17 @@ const getEachUserGivenId = (id, index) => {
           ) {
             resolve(modifiedResult)
           } else {
-            reject(new Error('No data received'))
+            reject(new Error("No data received"))
           }
         }),
       )
       .catch(err => {
-        console.log('HIT the ERROR')
+        console.log("HIT the ERROR")
       })
   })
 }
 
-// Util function to merge to topUsers array the data from userProfiles array, as they are coming from two different api calls
+// Util function to merge to topUsers array data with userProfiles array, as they are coming from two different api calls
 const mergeArraysConditionally = (topUsers, userProfiles) => {
   let merged = []
 
@@ -93,7 +93,7 @@ export const loadMostPopularUsers = (
       payload: true,
     })
     axios({
-      method: 'get',
+      method: "get",
       // url: `https://api.github.com/search/users?q=location%3A${city}&followers%3A%3E%3D1000&ref=searchresults&s=followers&type=Users`,
       url: `https://api.github.com/search/users?q=location:${city}`,
       headers,
@@ -105,12 +105,13 @@ export const loadMostPopularUsers = (
         const resData = res.data.items.slice(start, end)
         var topTenUsersInCity = map(
           resData,
-          partialRight(pick, ['login', 'id', 'avatar_url']),
+          partialRight(pick, ["login", "id", "avatar_url"]),
         )
 
         const userIds = topTenUsersInCity.map(i => i.login)
         let topTenUserProfiles = await userIds.map(getEachUserGivenId)
         let topUserIndividualProfiles = Promise.all(topTenUserProfiles)
+        /* Note, I can use then() method and the catch() method on this promise which is returned from Promise.all. The then() method gets an array of all the resolved values, [5, 1, 'foo'] in this case. The catch() method gets the value of the first rejected Promise,  */
         topUserIndividualProfiles
           .then(res => {
             dispatch({
@@ -127,20 +128,20 @@ export const loadMostPopularUsers = (
           .catch(err => {
             dispatch({
               type: ERROR_WHILE_FETCHING_INITIAL_TABLE,
-              payload: 'Error occurred while loading Initial Data',
+              payload: "Error occurred while loading Initial Data",
             })
           })
       })
       .catch(err => {
         dispatch({
           type: ERROR_WHILE_FETCHING_INITIAL_TABLE,
-          payload: 'Error occurred while loading Initial Data',
+          payload: "Error occurred while loading Initial Data",
         })
       })
   } catch (err) {
     dispatch({
       type: ERROR_WHILE_FETCHING_INITIAL_TABLE,
-      payload: 'Error occurred while loading Initial Data',
+      payload: "Error occurred while loading Initial Data",
     })
   }
 }

@@ -2,35 +2,35 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/button-has-type */
 /* eslint-disable-next-line react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import PropTypes from 'prop-types'
-import { Typography } from '@material-ui/core'
-import GlobalSnackbar from '../../components_libs/GlobalSnackbar'
-import LoadingSpinner from '../../components_libs/LoadingSpinner'
+import React, { useEffect, useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import PropTypes from "prop-types"
+import { Typography } from "@material-ui/core"
+import GlobalSnackbar from "../../components_libs/GlobalSnackbar"
+import LoadingSpinner from "../../components_libs/LoadingSpinner"
 import {
   loadMostPopularUsers,
   handleCityToSearchChange,
   handleSnackBarStatus,
-} from '../../actions/getUserActions'
-import Button from '@material-ui/core/Button'
-import Autosuggest from 'react-autosuggest'
-import EachUserListItem from './EachUserListItem'
-import cityList from '../../utils/country-city-js'
-import { defaultTheme } from 'react-autosuggest/dist/theme'
-import { useStyles } from './GithubMostPopularListStyles'
-import TablePagination from '@material-ui/core/TablePagination'
+} from "../../actions/getUserActions"
+import Button from "@material-ui/core/Button"
+import Autosuggest from "react-autosuggest"
+import EachUserListItem from "./EachUserListItem"
+import cityList from "../../utils/country-city-js"
+import { defaultTheme } from "react-autosuggest/dist/theme"
+import { useStyles } from "./GithubMostPopularListStyles"
+import TablePagination from "@material-ui/core/TablePagination"
 
 const escapeRegexCharacters = str => {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 }
 
 const getSuggestions = value => {
   const escapedValue = escapeRegexCharacters(value.trim())
-  if (escapedValue === '') {
+  if (escapedValue === "") {
     return []
   }
-  const regex = new RegExp('^' + escapedValue, 'i')
+  const regex = new RegExp("^" + escapedValue, "i")
   return cityList.filter(language => regex.test(language.name))
 }
 
@@ -46,9 +46,9 @@ const GithubMostPopularList = () => {
   const globalStore = useSelector(state => state.globalStore)
   const dispatch = useDispatch()
   const classes = useStyles()
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState("")
   const [suggestions, setSuggestions] = useState([])
-  const [currentCityShown, setcurrentCityShown] = useState('')
+  const [currentCityShown, setcurrentCityShown] = useState("")
 
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
@@ -79,6 +79,8 @@ const GithubMostPopularList = () => {
     setValue(newValue)
   }
 
+  const justTesting = () => console.log("Testing")
+
   const onSuggestionsFetchRequested = ({ value }) => {
     setSuggestions(getSuggestions(value))
   }
@@ -88,7 +90,7 @@ const GithubMostPopularList = () => {
   }
 
   const inputProps = {
-    placeholder: 'Start typing your city name',
+    placeholder: "Start typing your city name",
     value,
     onChange: onChange,
   }
@@ -96,14 +98,14 @@ const GithubMostPopularList = () => {
   return (
     <div className={classes.container}>
       <div className={classes.tableAndFabContainer}>
-        {console.log('PAGE ', page)}
+        {console.log("PAGE ", page)}
         {globalStore.loading ? (
           <div className={classes.spinner}>
             <LoadingSpinner />
           </div>
         ) : (
           <div className={classes.table}>
-            {console.log('SNACKBAR ', globalStore.snackbar)}
+            {console.log("SNACKBAR ", globalStore.snackbar)}
             <div className={classes.inputandButtonContainer}>
               <Autosuggest
                 suggestions={suggestions}
@@ -133,7 +135,7 @@ const GithubMostPopularList = () => {
                 variant="contained"
                 size="large"
                 color="primary"
-                disabled={globalStore.city_to_search === ''}
+                disabled={globalStore.city_to_search === ""}
               >
                 <Typography
                   variant="h3"
@@ -143,7 +145,7 @@ const GithubMostPopularList = () => {
                 </Typography>
               </Button>
             </div>
-            <div style={{ marginTop: '20px' }}>
+            <div style={{ marginTop: "20px" }}>
               <EachUserListItem
                 currentCityShown={currentCityShown}
               ></EachUserListItem>
@@ -162,12 +164,12 @@ const GithubMostPopularList = () => {
         <GlobalSnackbar
           open={
             globalStore.snackbar === true ||
-            typeof globalStore.snackbar === 'object' ||
-            typeof globalStore.snackbar === 'string' ||
+            typeof globalStore.snackbar === "object" ||
+            typeof globalStore.snackbar === "string" ||
             globalStore.snackbar instanceof String
           }
           variant="error"
-          message={'Error occurred while loading Initial Data'}
+          message={"Error occurred while loading Initial Data"}
           onClose={closeSnackbar}
         />
       </div>
@@ -176,7 +178,7 @@ const GithubMostPopularList = () => {
 }
 
 GithubMostPopularList.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
 }
 
 export default GithubMostPopularList
