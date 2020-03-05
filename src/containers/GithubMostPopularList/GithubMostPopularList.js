@@ -98,14 +98,14 @@ const GithubMostPopularList = () => {
   return (
     <div className={classes.container}>
       <div className={classes.tableAndFabContainer}>
-        {console.log("PAGE ", page)}
+        {/* {console.log("PAGE ", page)} */}
         {globalStore.loading ? (
           <div className={classes.spinner}>
             <LoadingSpinner />
           </div>
         ) : (
           <div className={classes.table}>
-            {console.log("SNACKBAR ", globalStore.snackbar)}
+            {/* {console.log("SNACKBAR ", globalStore.snackbar)} */}
             <div className={classes.inputandButtonContainer}>
               <Autosuggest
                 suggestions={suggestions}

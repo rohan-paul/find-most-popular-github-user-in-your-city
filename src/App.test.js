@@ -1,17 +1,5 @@
-/* import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
-
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
- */
-
 import React from "react"
 import renderer from "react-test-renderer"
-// import { MuiThemeProvider } from 'styled-components'
 import { MuiThemeProvider } from "@material-ui/core/styles"
 import globalTheme from "./globalTheme"
 import PropTypes from "prop-types"
