@@ -1,3 +1,5 @@
+##### Its was a 12 Hour Take Home exercise that I did in 1st Quater in 2020
+
 ##### The LIVE site running [here](https://popular-github-user.netlify.com/)
 
 This project is for searching the most popular (by followers count) Github user in a City. Just type a city name in the search box (which has a autocomplete features covering most of the cities of the world ). But if a City is not coming up in the Autocompletion, you can just type it and then hit the blue Button ('LOAD CITY DATA')

@@ -3,6 +3,7 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable-next-line react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react"
+import { normalize, schema } from "normalizr"
 import { useSelector, useDispatch } from "react-redux"
 import PropTypes from "prop-types"
 import { Typography } from "@material-ui/core"
@@ -94,6 +95,49 @@ const GithubMostPopularList = () => {
     value,
     onChange: onChange,
   }
+
+  // ***********
+  // The below code is just for my completely unrelated notes on normalizr package. As this code was not running in a plain .js file
+
+  const articlesData = {
+    articles: [
+      {
+        id: 1,
+        title: "Dagon",
+        tags: [
+          { id: 1, name: "old ones" },
+          { id: 2, name: "short story" },
+        ],
+      },
+      {
+        id: 2,
+        title: "Azathoth",
+        tags: [
+          { id: 1, name: "old ones" },
+          { id: 3, name: "novel" },
+        ],
+      },
+      {
+        id: 3,
+        title: "At the Mountains of Madness",
+        tags: [
+          { id: 4, name: "insanity" },
+          { id: 3, name: "novel" },
+        ],
+      },
+    ],
+  }
+
+  const tag = new schema.Entity("tags", {})
+  const article = new schema.Entity("articles", {
+    tags: [tag],
+  })
+
+  // We assume articlesData is the (parsed) JSON object that we got
+  const normalizedData = normalize(articlesData, { articles: [article] })
+
+  console.log("normalizr data is ", normalizedData)
+  // ***********
 
   return (
     <div className={classes.container}>
